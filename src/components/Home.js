@@ -62,6 +62,8 @@ export default class Home extends React.Component {
       .then(res => {
         console.log(res);
         this.socket.emit("new_player", roomNumber);
+      })
+      .then(() => {
         window.location.href = `/lobby/${roomNumber}`;
       })
       .catch(err => {
