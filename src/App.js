@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        <h1>just one</h1>
+        <h1 onClick={() => (window.location.href = "/")}>just one</h1>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/lobby/:gameId" component={Lobby} />
