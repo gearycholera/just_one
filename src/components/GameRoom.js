@@ -3,6 +3,7 @@ import axios from "axios";
 import io from "socket.io-client";
 import HintInput from "./HintInput";
 import HintFilter from "./HintFilter";
+import Lobby from "./Lobby";
 
 export default class GameRoom extends React.Component {
   constructor(props) {
@@ -15,7 +16,8 @@ export default class GameRoom extends React.Component {
       loading: true,
       allHintsSubmitted: false,
       hintsFiltered: false,
-      gameDone: false
+      gameDone: false,
+      gameStarted: false
     };
     this.gameId = this.props.match.params.gameId;
     this.socket = io.connect();
@@ -34,6 +36,12 @@ export default class GameRoom extends React.Component {
     });
     this.socket.on("game_done", gameData => {
       this.setState({ gameData: gameData, gameDone: true });
+    });
+    this.socket.on("waiting", () => {
+      this.setState({ gameStarted: false });
+    });
+    this.socket.on("game_started", gameData => {
+      this.setState({ gameStarted: true, gameData: gameData });
     });
   }
 
@@ -66,6 +74,10 @@ export default class GameRoom extends React.Component {
           <p>game room</p>
         </div>
       );
+    }
+
+    if (!this.state.gameStarted) {
+      return <Lobby gameId={this.gameId} />;
     }
 
     if (this.state.gameDone) {

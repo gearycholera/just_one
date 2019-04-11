@@ -42,7 +42,7 @@ export default class Home extends React.Component {
         this.socket.disconnect();
       })
       .then(() => {
-        window.location.href = `/lobby/${gameId}`;
+        window.location.href = `/gameroom/${gameId}`;
       })
       .catch(err => {
         alert(err.message);
@@ -67,7 +67,7 @@ export default class Home extends React.Component {
         this.socket.disconnect();
       })
       .then(() => {
-        window.location.href = `/lobby/${roomNumber}`;
+        window.location.href = `/gameroom/${roomNumber}`;
       })
       .catch(err => {
         console.log(err);
