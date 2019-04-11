@@ -6,7 +6,7 @@ const port = process.env.PORT || 3001;
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = socketIO(server, { pingInterval: 60000 });
 
 app.use(express.json());
 
