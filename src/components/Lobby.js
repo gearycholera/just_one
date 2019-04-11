@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import io from "socket.io-client";
 
+let socket;
+
 export default class Lobby extends React.Component {
   constructor(props) {
     super(props);
@@ -12,18 +14,18 @@ export default class Lobby extends React.Component {
       }
     };
     this.gameId = this.props.match.params.gameId;
-    this.socket = io.connect();
-    this.socket.on("connect", () => {
-      this.socket.emit("join", this.gameId);
-    });
   }
 
   componentDidMount() {
+    socket = io.connect();
+    socket.on("connect", () => {
+      socket.emit("join", this.gameId);
+    });
     this.getData();
-    this.socket.on("room_update", gameData => {
+    socket.on("room_update", gameData => {
       this.setState({ gameData: gameData });
     });
-    this.socket.on("game_started", () => {
+    socket.on("game_started", () => {
       window.location.href = `/gameroom/${this.gameId}`;
     });
   }
@@ -41,7 +43,7 @@ export default class Lobby extends React.Component {
   }
 
   handleStartGame = () => {
-    this.socket.emit("start_game", this.gameId);
+    socket.emit("start_game", this.gameId);
   };
 
   render() {
