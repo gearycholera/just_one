@@ -8,7 +8,7 @@ export default class HintFilter extends React.Component {
       hints: this.props.gameData.hints,
       hintsState: new Array(this.props.gameData.hints.length).fill(true)
     };
-    this.socket = io("http://localhost:3001");
+    this.socket = io("http://54.153.0.109:3001");
     this.socket.on("connect", () => {
       this.socket.emit("join", this.props.gameId);
     });
