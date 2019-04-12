@@ -9,7 +9,7 @@ export default class HintInput extends React.Component {
       hint: null,
       submitted: false
     };
-    this.socket = io("http://localhost:3001");
+    this.socket = io("http://54.153.0.109:3001");
   }
 
   handleChange = event => {
