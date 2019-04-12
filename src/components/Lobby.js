@@ -12,7 +12,7 @@ export default class Lobby extends React.Component {
       }
     };
     this.gameId = this.props.match.params.gameId;
-    this.socket = io("http://localhost:3001");
+    this.socket = io("http://54.153.0.109:3001");
     this.socket.on("connect", () => {
       this.socket.emit("join", this.gameId);
     });
