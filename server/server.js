@@ -6,7 +6,7 @@ const port = process.env.PORT || 3001;
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server, { pingInterval: 60000 });
+const io = socketIO(server);
 
 app.use(express.json());
 
@@ -98,7 +98,6 @@ io.on("connection", socket => {
     console.log(gameId, socket.id);
     socket.join(gameId);
     console.log(io.sockets.adapter.rooms);
-    io.in(`${gameId}`).emit("waiting", data.games[gameId]);
   });
 
   socket.on("new_player", gameId => {

@@ -11,10 +11,10 @@ export default class Lobby extends React.Component {
         creator: false
       }
     };
-
-    this.socket = io.connect();
+    this.gameId = this.props.match.params.gameId;
+    this.socket = io("http://localhost:3001");
     this.socket.on("connect", () => {
-      this.socket.emit("join", this.props.gameId);
+      this.socket.emit("join", this.gameId);
     });
   }
 
@@ -23,11 +23,14 @@ export default class Lobby extends React.Component {
     this.socket.on("room_update", gameData => {
       this.setState({ gameData: gameData });
     });
+    this.socket.on("game_started", () => {
+      window.location.href = `/gameroom/${this.gameId}`;
+    });
   }
 
   getData() {
     axios
-      .get(`/api/getGameData?gameId=${this.props.gameId}`)
+      .get(`/api/getGameData?gameId=${this.gameId}`)
       .then(res => {
         console.log(res.data);
         this.setState({ gameData: res.data });
@@ -38,7 +41,7 @@ export default class Lobby extends React.Component {
   }
 
   handleStartGame = () => {
-    this.socket.emit("start_game", this.props.gameId);
+    this.socket.emit("start_game", this.gameId);
   };
 
   render() {

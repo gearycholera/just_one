@@ -11,7 +11,8 @@ export default class Home extends React.Component {
       joinGame: false,
       gameId: null
     };
-    this.socket = io("ws://localhost:3001", { transports: ["websocket"] });
+
+    this.socket = io("http://localhost:3001");
   }
 
   handleChange = event => {
@@ -39,10 +40,7 @@ export default class Home extends React.Component {
       .then(res => {
         console.log(res);
         this.socket.emit("game_created", gameId);
-        this.socket.disconnect();
-      })
-      .then(() => {
-        window.location.href = `/gameroom/${gameId}`;
+        window.location.href = `/lobby/${gameId}`;
       })
       .catch(err => {
         alert(err.message);
@@ -64,10 +62,7 @@ export default class Home extends React.Component {
       .then(res => {
         console.log(res);
         this.socket.emit("new_player", roomNumber);
-        this.socket.disconnect();
-      })
-      .then(() => {
-        window.location.href = `/gameroom/${roomNumber}`;
+        window.location.href = `/lobby/${roomNumber}`;
       })
       .catch(err => {
         console.log(err);
