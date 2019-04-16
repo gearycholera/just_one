@@ -12,7 +12,7 @@ export default class Home extends React.Component {
       gameId: null
     };
 
-    this.socket = io("http://54.153.0.109:3001");
+    this.socket = io("http://localhost:3001");
   }
 
   handleChange = event => {
